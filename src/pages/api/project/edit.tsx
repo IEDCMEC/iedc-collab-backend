@@ -5,7 +5,6 @@ import { DocumentData, doc, updateDoc } from "firebase/firestore";
 import { NextApiRequest, NextApiResponse } from "next";
 import InvitationEmail from "@/components/InvitationEmail/InvitationEmail";
 import { withAuth } from "@/middleware/auth";
-import handler from "..";
 import NextCors from "nextjs-cors";
 
 async function EditProject(req: NextApiRequest, res: NextApiResponse) {

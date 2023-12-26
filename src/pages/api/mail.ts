@@ -1,4 +1,3 @@
-import { withAuth } from "@/middleware/auth";
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -15,4 +14,4 @@ async function SendMail(req: NextApiRequest, res: NextApiResponse) {
   res.status(500).json({ message: responsefromMailer });
 }
 
-export default withAuth(SendMail);
+export default SendMail;
