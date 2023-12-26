@@ -17,7 +17,7 @@ async function AddProject(req: NextApiRequest, res: NextApiResponse) {
     .then(async () => {
       req.body.teamMembers.forEach(async (member: string) => {
         let sent = false;
-        const developersResponse = await axios.post(
+        const developersResponse = await axios.get(
           `${process.env.BACKEND_BASE_URL}/api/developer`
         );
         developersResponse.data.forEach((dev: DocumentData) => {
