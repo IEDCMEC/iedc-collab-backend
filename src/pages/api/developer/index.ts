@@ -16,7 +16,10 @@ export default async function GetDevelopers(
     let developers: DocumentData[] = [];
     const developersSnapshot = await getDocs(collection(db, "users"));
     developersSnapshot.forEach((doc) => {
-      developers.push(doc.data());
+      developers.push({
+        ...doc.data(),
+        id: doc.id,
+      });
     });
     return res.status(200).json(developers);
   }
