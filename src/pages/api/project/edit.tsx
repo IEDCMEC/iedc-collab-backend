@@ -19,7 +19,7 @@ async function EditProject(req: NextApiRequest, res: NextApiResponse) {
       req.body.teamMembers.forEach(async (member: string) => {
         let sent = false;
         const developersResponse = await axios.post(
-          "process.env.BACKEND_BASE_URL/api/developer"
+          `${process.env.BACKEND_BASE_URL}/api/developer`
         );
         developersResponse.data.forEach((dev: DocumentData) => {
           if (dev.email === member) {
@@ -27,7 +27,7 @@ async function EditProject(req: NextApiRequest, res: NextApiResponse) {
           }
         });
         if (sent === false)
-          axios.post("process.env.BACKEND_BASE_URL/api/mail", {
+          axios.post(`${process.env.BACKEND_BASE_URL}/api/mail`, {
             toEmail: member,
             subject: "Invitation to join IEDC Collab",
             content: renderEmail(

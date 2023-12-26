@@ -25,7 +25,7 @@ import NextCors from "nextjs-cors";
 
   await addDoc(collection(db, "requests"), requestData)
     .then((docRef) => {
-      axios.post("process.env.BACKEND_BASE_URL/api/mail", {
+      axios.post(`${process.env.BACKEND_BASE_URL}/api/mail`, {
         toEmail: req.body.receiver_email,
         subject: `Request to Join Team of ${req.body.project} from IEDC Collab`,
         content: renderEmail(<ProjectRequestEmail request={requestData} />),

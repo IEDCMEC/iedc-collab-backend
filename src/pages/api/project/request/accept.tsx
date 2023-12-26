@@ -17,10 +17,10 @@ async function AcceptRequest(
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   });
   const projectResponse = await axios.get(
-    `process.env.BACKEND_BASE_URL/api/project/${req.body.project_id}`
+    `${process.env.BACKEND_BASE_URL}/api/project/${req.body.project_id}`
   );
   const requestResponse = await axios.get(
-    `process.env.BACKEND_BASE_URL/api/request/${req.body.id}`
+    `${process.env.BACKEND_BASE_URL}/api/request/${req.body.id}`
   );
   if (requestResponse.data) {
     const requestsRef = doc(db, "requests", `${req.body.id}`);
@@ -35,7 +35,7 @@ async function AcceptRequest(
           teamMembers: users,
         })
           .then(() => {
-            axios.post("process.env.BACKEND_BASE_URL/api/mail", {
+            axios.post(`${process.env.BACKEND_BASE_URL}/api/mail`, {
               toEmail: req.body.receiver_email,
               subject: `Request Accepted by ${req.body.receiver} from IEDC Collab`,
               content: renderEmail(
