@@ -4,8 +4,9 @@ import axios from "axios";
 import { addDoc, collection } from "firebase/firestore";
 import { NextApiRequest, NextApiResponse } from "next";
 import ProjectRequestEmail from "../../../components/ProjectRequestEmail/ProjectRequestEmail";
+import { withAuth } from "@/middleware/auth";
 
-export default async function handler(
+ async function InviteToProject(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -31,3 +32,5 @@ export default async function handler(
       console.error("Oops! Invite wasn't sent.\nMore info:", error);
     });
 }
+
+export default withAuth(InviteToProject)

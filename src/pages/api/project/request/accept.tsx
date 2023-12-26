@@ -1,11 +1,12 @@
 import ConfirmationEmail from "@/components/ConfirmationEmail/ConfirmationEmail";
+import { withAuth } from "@/middleware/auth";
 import db from "@/utils/firebase";
 import axios from "axios";
 import { doc, updateDoc } from "firebase/firestore";
 import { NextApiRequest, NextApiResponse } from "next";
 import { renderEmail } from "react-html-email";
 
-export default async function AcceptRequest(
+async function AcceptRequest(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -44,3 +45,5 @@ export default async function AcceptRequest(
     });
   }
 }
+
+export default withAuth(AcceptRequest)

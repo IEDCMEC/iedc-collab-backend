@@ -4,11 +4,10 @@ import axios from "axios";
 import { DocumentData, doc, updateDoc } from "firebase/firestore";
 import { NextApiRequest, NextApiResponse } from "next";
 import InvitationEmail from "@/components/InvitationEmail/InvitationEmail";
+import { withAuth } from "@/middleware/auth";
+import handler from "..";
 
-export default async function EditProject(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+async function EditProject(req: NextApiRequest, res: NextApiResponse) {
   await updateDoc(doc(db, "projects", req.body.id), req.body)
     .then(async () => {
       req.body.teamMembers.forEach(async (member: string) => {
@@ -38,3 +37,5 @@ export default async function EditProject(
       console.error("Oops! Project isn't added.\nMore info:", error);
     });
 }
+
+export default withAuth(EditProject);

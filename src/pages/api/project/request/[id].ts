@@ -2,7 +2,7 @@ import db from "@/utils/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default async function GetRequests(
+export default async function GetRequestById(
   req: NextApiRequest,
   res: NextApiResponse
 ) {

@@ -1,10 +1,8 @@
+import { withAuth } from "@/middleware/auth";
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+async function SendMail(req: NextApiRequest, res: NextApiResponse) {
   const responsefromMailer = await axios.post(process.env.MAILER_API_URL!, {
     toEmail: req.body.toEmail,
     subject: req.body.subject,
@@ -16,3 +14,5 @@ export default async function handler(
   }
   res.status(500).json({ message: responsefromMailer });
 }
+
+export default withAuth(SendMail);

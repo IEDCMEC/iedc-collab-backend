@@ -4,11 +4,9 @@ import axios from "axios";
 import { DocumentData, addDoc, collection } from "firebase/firestore";
 import { NextApiRequest, NextApiResponse } from "next";
 import InvitationEmail from "@/components/InvitationEmail/InvitationEmail";
+import { withAuth } from "@/middleware/auth";
 
-export default async function AddProject(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+async function AddProject(req: NextApiRequest, res: NextApiResponse) {
   await addDoc(collection(db, "projects"), req.body)
     .then(async () => {
       req.body.teamMembers.forEach(async (member: string) => {
@@ -30,13 +28,13 @@ export default async function AddProject(
             ),
           });
       });
-      res
-        .status(200)
-        .json({
-          message: `Project added successfully with ID : ${req.body.id}.`,
-        });
+      res.status(200).json({
+        message: `Project added successfully with ID : ${req.body.id}.`,
+      });
     })
     .catch((error) => {
       console.error("Oops! Project isn't added.\nMore info:", error);
     });
 }
+
+export default withAuth(AddProject);
