@@ -13,7 +13,8 @@ async function EditProject(req: NextApiRequest, res: NextApiResponse) {
     origin: "*",
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   });
-  await updateDoc(doc(db, "projects", req.body.id), req.body)
+  const { id, ...updateFields } = req.body;
+  await updateDoc(doc(db, "projects", id), updateFields)
     .then(async () => {
       req.body.teamMembers.forEach(async (member: string) => {
         let sent = false;
@@ -35,7 +36,7 @@ async function EditProject(req: NextApiRequest, res: NextApiResponse) {
           });
       });
       res.status(200).json({
-        message: `Project edited successfully with ID : ${req.body.id}.`,
+        message: `Project edited successfully with ID : ${id}.`,
       });
     })
     .catch((error) => {
