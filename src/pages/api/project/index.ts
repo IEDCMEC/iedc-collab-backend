@@ -16,7 +16,7 @@ export default async function GetProjects(
     let projects: DocumentData[] = [];
     const projectsSnapshot = await getDocs(collection(db, "projects"));
     projectsSnapshot.forEach((doc) => {
-      projects.push(doc.data());
+      projects.push({ ...doc.data(), id: doc.id });
     });
     return res.status(200).json(projects);
   }
