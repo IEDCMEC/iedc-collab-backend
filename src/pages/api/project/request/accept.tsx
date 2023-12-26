@@ -25,7 +25,7 @@ async function AcceptRequest(
   if (requestResponse.data) {
     const requestsRef = doc(db, "requests", `${req.body.id}`);
     await updateDoc(requestsRef, {
-      status: "declined",
+      status: "accepted",
     }).then(async () => {
       if (projectResponse.data) {
         let users = projectResponse.data.teamMembers;
@@ -36,7 +36,7 @@ async function AcceptRequest(
         })
           .then(() => {
             axios.post(`${process.env.BACKEND_BASE_URL}/api/mail`, {
-              toEmail: req.body.receiver_email,
+              toEmail: req.body.sender_email,
               subject: `Request Accepted by ${req.body.receiver} from IEDC Collab`,
               content: renderEmail(
                 <ConfirmationEmail request={req.body} status={"accepted"} />
