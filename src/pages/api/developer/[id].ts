@@ -21,7 +21,7 @@ export default async function GetDeveloperById(
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        return res.status(200).json(docSnap.data());
+        return res.status(200).json({ ...docSnap.data(), id: docSnap.id });
       } else {
         return res.status(200).json([]);
       }
