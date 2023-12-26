@@ -1,5 +1,5 @@
 import db from "@/utils/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { NextApiRequest, NextApiResponse } from "next";
 import NextCors from "nextjs-cors";
 
@@ -17,11 +17,13 @@ export default async function GetDeveloperById(
     if (!id) {
       return res.status(200).json([]);
     } else {
-      const docRef = doc(db, "users", id);
-      const docSnap = await getDoc(docRef);
+      const userQuery = query(collection(db, "users"), where("uid", "==", id));
+      const docSnap = await getDocs(userQuery);
 
-      if (docSnap.exists()) {
-        return res.status(200).json({ ...docSnap.data(), id: docSnap.id });
+      if (!docSnap.empty) {
+        const firstDoc = docSnap.docs[0];
+
+        return res.status(200).json({ ...firstDoc.data(), id: firstDoc.id });
       } else {
         return res.status(200).json([]);
       }

@@ -7,10 +7,7 @@ import ProjectRequestEmail from "../../../components/ProjectRequestEmail/Project
 import { withAuth } from "@/middleware/auth";
 import NextCors from "nextjs-cors";
 
- async function InviteToProject(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+async function InviteToProject(req: NextApiRequest, res: NextApiResponse) {
   await NextCors(req, res, {
     methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
     origin: "*",
@@ -22,21 +19,21 @@ import NextCors from "nextjs-cors";
     type: "invite",
     createdAt: Date.now(),
   };
+  try {
+    const docRef = await addDoc(collection(db, "requests"), requestData);
 
-  await addDoc(collection(db, "requests"), requestData)
-    .then((docRef) => {
-      axios.post(`${process.env.BACKEND_BASE_URL}/api/mail`, {
-        toEmail: req.body.receiver_email,
-        subject: `Invite to join project ${req.body.project} from IEDC Collab`,
-        content: renderEmail(<ProjectRequestEmail request={requestData} />),
-      });
-      res
-        .status(200)
-        .json({ message: `Invite sent successfully with ID: ${docRef.id}` });
-    })
-    .catch((error) => {
-      console.error("Oops! Invite wasn't sent.\nMore info:", error);
+    axios.post(`${process.env.BACKEND_BASE_URL}/api/mail`, {
+      toEmail: req.body.reciever_email,
+      subject: `Invite to join project ${req.body.project} from IEDC Collab`,
+      content: renderEmail(<ProjectRequestEmail request={requestData} />),
     });
+
+    res
+      .status(200)
+      .json({ message: `Invite sent successfully with ID: ${docRef.id}` });
+  } catch (error) {
+    console.error("Oops! Invite wasn't sent.\nMore info:", error);
+  }
 }
 
-export default withAuth(InviteToProject)
+export default withAuth(InviteToProject);
