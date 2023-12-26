@@ -6,8 +6,14 @@ import { NextApiRequest, NextApiResponse } from "next";
 import InvitationEmail from "@/components/InvitationEmail/InvitationEmail";
 import { withAuth } from "@/middleware/auth";
 import handler from "..";
+import NextCors from "nextjs-cors";
 
 async function EditProject(req: NextApiRequest, res: NextApiResponse) {
+  await NextCors(req, res, {
+    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+    origin: "*",
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  });
   await updateDoc(doc(db, "projects", req.body.id), req.body)
     .then(async () => {
       req.body.teamMembers.forEach(async (member: string) => {

@@ -5,8 +5,14 @@ import { DocumentData, addDoc, collection } from "firebase/firestore";
 import { NextApiRequest, NextApiResponse } from "next";
 import InvitationEmail from "@/components/InvitationEmail/InvitationEmail";
 import { withAuth } from "@/middleware/auth";
+import NextCors from "nextjs-cors";
 
 async function AddProject(req: NextApiRequest, res: NextApiResponse) {
+  await NextCors(req, res, {
+    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+    origin: "*",
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  });
   await addDoc(collection(db, "projects"), req.body)
     .then(async () => {
       req.body.teamMembers.forEach(async (member: string) => {

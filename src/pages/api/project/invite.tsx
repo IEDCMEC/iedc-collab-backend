@@ -5,11 +5,17 @@ import { addDoc, collection } from "firebase/firestore";
 import { NextApiRequest, NextApiResponse } from "next";
 import ProjectRequestEmail from "../../../components/ProjectRequestEmail/ProjectRequestEmail";
 import { withAuth } from "@/middleware/auth";
+import NextCors from "nextjs-cors";
 
  async function InviteToProject(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  await NextCors(req, res, {
+    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+    origin: "*",
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  });
   const requestData = {
     ...req.body,
     status: "pending",
