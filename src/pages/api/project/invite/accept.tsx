@@ -28,7 +28,7 @@ async function AcceptInvite(req: NextApiRequest, res: NextApiResponse) {
 
       if (projectResponse.data) {
         let users = projectResponse.data.teamMembers;
-        users.push(req.body.sender_email);
+        users.push(req.body.reciever_email);
         const projectsRef = doc(db, "projects", `${req.body.project_id}`);
 
         try {
