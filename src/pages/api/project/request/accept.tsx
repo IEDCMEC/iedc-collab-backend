@@ -20,7 +20,7 @@ async function AcceptRequest(
     `${process.env.BACKEND_BASE_URL}/api/project/${req.body.project_id}`
   );
   const requestResponse = await axios.get(
-    `${process.env.BACKEND_BASE_URL}/api/request/${req.body.id}`
+    `${process.env.BACKEND_BASE_URL}/api/project/request/${req.body.id}`
   );
   if (requestResponse.data) {
     const requestsRef = doc(db, "requests", `${req.body.id}`);
