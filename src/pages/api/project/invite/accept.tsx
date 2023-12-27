@@ -13,7 +13,6 @@ async function AcceptInvite(req: NextApiRequest, res: NextApiResponse) {
     origin: "*",
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   });
-  console.log(req.body)
   const projectResponse = await axios.get(
     `${process.env.BACKEND_BASE_URL}/api/project/${req.body.project_id}`
   );

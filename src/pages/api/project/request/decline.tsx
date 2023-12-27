@@ -17,7 +17,7 @@ async function DeclineRequest(
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   });
   const requestResponse = await axios.get(
-    `${process.env.BACKEND_BASE_URL}/api/request/${req.body.id}`
+    `${process.env.BACKEND_BASE_URL}/api/project/request/${req.body.id}`
   );
   if (requestResponse.data) {
     const requestsRef = doc(db, "requests", `${req.body.id}`);
