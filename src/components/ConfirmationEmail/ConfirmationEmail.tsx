@@ -1,19 +1,18 @@
 type ConfirmationEmailProps = {
-    request: ConfirmationEmailRequestProps;
-    status: string
-  };
-  
-  type ConfirmationEmailRequestProps = {
-    receiver: string;
-    sender: string;
-    type: string;
-    project_id: string;
-    project: string;
-    message: string;
-  };
-  
+  request: ConfirmationEmailRequestProps;
+  status: string;
+};
 
-function ConfirmationEmail({ request, status }:ConfirmationEmailProps) {
+type ConfirmationEmailRequestProps = {
+  receiver: string;
+  sender: string;
+  type: string;
+  project_id: string;
+  project: string;
+  message: string;
+};
+
+function ConfirmationEmail({ request, status }: ConfirmationEmailProps) {
   return (
     <>
       <div>
@@ -41,15 +40,25 @@ function ConfirmationEmail({ request, status }:ConfirmationEmailProps) {
             </a>
           </i>
         </p>
+        <p
+          style={{
+            paddingLeft: "1.5rem",
+          }}
+        >
+          <b>Message : </b>{" "}
+          <p
+            style={{
+              paddingLeft: "2rem",
+            }}
+          >
+            {request.message ? request.message : 'Nil'}
+          </p>
+        </p>
         <br />
         <div>
           <p>
             To view more details , Vist{" "}
-            <a
-              href={process.env.BASE_URL}
-              target="_blank"
-              rel="noreferrer"
-            >
+            <a href={process.env.BASE_URL} target="_blank" rel="noreferrer">
               {process.env.BASE_URL}
             </a>
           </p>
