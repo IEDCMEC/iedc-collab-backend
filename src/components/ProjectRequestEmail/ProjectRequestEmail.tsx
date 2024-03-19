@@ -46,7 +46,7 @@ function ProjectRequestEmail({ request }: ProjectRequestEmailProps) {
           <b>Message : </b>{" "}
           <p
             style={{
-              paddingLeft: "1.5rem",
+              paddingLeft: "2rem",
             }}
           >
             {request.message}

@@ -1,5 +1,6 @@
 import db from "@/utils/firebase";
-import { DocumentData, collection, getDocs } from "firebase/firestore";
+import { DocumentData, collection, getDocs, query } from "firebase/firestore";
+import { where } from "firebase/firestore/lite";
 import { NextApiRequest, NextApiResponse } from "next";
 import NextCors from "nextjs-cors";
 
@@ -14,7 +15,7 @@ export default async function GetDevelopers(
   });
   if (req.method === "GET") {
     let developers: DocumentData[] = [];
-    const developersSnapshot = await getDocs(collection(db, "users"));
+    const developersSnapshot = await getDocs(query(collection(db, "users"), where("user","!=", "organization")));
     developersSnapshot.forEach((doc) => {
       developers.push({
         ...doc.data(),
