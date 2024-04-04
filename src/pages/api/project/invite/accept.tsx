@@ -28,7 +28,7 @@ async function AcceptInvite(req: NextApiRequest, res: NextApiResponse) {
 
       if (projectResponse.data) {
         let users = projectResponse.data.teamMembers;
-        users.push(req.body.reciever_email);
+        users.push(req.body.receiver_email);
         const projectsRef = doc(db, "projects", `${req.body.project_id}`);
 
         try {
@@ -36,7 +36,7 @@ async function AcceptInvite(req: NextApiRequest, res: NextApiResponse) {
             teamMembers: users,
           });
 
-          await axios.post(`${process.env.BACKEND_BASE_URL}/api/mail`, {
+          const response = await axios.post(`${process.env.BACKEND_BASE_URL}/api/mail`, {
             toEmail: req.body.sender_email,
             subject: `Invite Accepted by ${req.body.receiver} from IEDC Collab`,
             content: renderEmail(
