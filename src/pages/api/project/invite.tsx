@@ -23,7 +23,7 @@ async function InviteToProject(req: NextApiRequest, res: NextApiResponse) {
     const docRef = await addDoc(collection(db, "requests"), requestData);
 
     axios.post(`${process.env.BACKEND_BASE_URL}/api/mail`, {
-      toEmail: req.body.reciever_email,
+      toEmail: req.body.receiver_email,
       subject: `Invite to join project ${req.body.project} from IEDC Collab`,
       content: renderEmail(<ProjectRequestEmail request={requestData} />),
     });
